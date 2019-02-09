@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>Timeline</title>
+    </head>
+    <body>
+        <ul>
+            {% for tweet in public_tweets %}
+                <li><b>{{tweet.user.name}}</b> - {{tweet.text}}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
