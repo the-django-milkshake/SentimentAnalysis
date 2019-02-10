@@ -5,7 +5,7 @@
     <body>
         <ul>
             {% for tweet in public_tweets %}
-                <li><b>{{tweet.tweet.user.name}}</b> - {{tweet.tweet.text}}<br>{{tweet.subjectivity}} ({{tweet.language}})</li>
+                <li><b>@{{tweet.tweet.user.screen_name}}</b> - {{tweet.tweet.full_text}}<br>{{tweet.subjectivity}} ({{tweet.language}})</li>
             {% endfor %}
         </ul>
     </body>
