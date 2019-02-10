@@ -43,7 +43,7 @@ def getSentiments(request):
         if senti>0.1:
             senti_analysis = 'Positive'
             total_pos += 1
-        elif senti<0.1:
+        elif senti<-0.1:
             senti_analysis = 'Negative'
             total_neg += 1
         else:
@@ -56,9 +56,9 @@ def getSentiments(request):
 
     # The `chartConfig` dict contains key-value pairs data for chart attribute
     chartConfig = OrderedDict()
-    chartConfig["caption"] = "Sentiments of News"
-    chartConfig["subCaption"] = "sentiments in range -1 to 1"
-    chartConfig["xAxisName"] = "News"
+    chartConfig["caption"] = "Sentiments of Tweets"
+    chartConfig["subCaption"] = "sentiments in range 0 to 1. Red: negative, Blue: Positive, Black: Neutral"
+    chartConfig["xAxisName"] = "Twitter Handles"
     chartConfig["yAxisName"] = "Sentiments"
     chartConfig["numberSuffix"] = ""
     chartConfig["theme"] = "fusion"
@@ -75,7 +75,16 @@ def getSentiments(request):
     for key, value in chartData.items():
         data = {}
         data["label"] = key
-        data["value"] = value
+        if value>0.1:
+            data["color"] = "#0000ff"
+        elif value<-0.1:
+            data["color"] = "#ff0000"
+        else:
+            data["color"] = "#000000"
+        if value>0:
+            data["value"] = value
+        else:
+            data["value"] = -value
         dataSource["data"].append(data)
 
     datapie = [{

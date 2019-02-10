@@ -31,7 +31,7 @@ class Analysis():
             self.subjectivity += sub / len(headline_results)
             if senti>0.1:
                 senti_analysis = 'Positive'
-            elif senti<0.1:
+            elif senti<-0.1:
                 senti_analysis = 'Negative'
             else:
                 senti_analysis = 'Neutral'
