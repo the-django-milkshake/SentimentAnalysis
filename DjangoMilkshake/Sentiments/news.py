@@ -29,5 +29,11 @@ class Analysis():
             sub = blob.sentiment.subjectivity
             self.sentiment += senti / len(headline_results)
             self.subjectivity += sub / len(headline_results)
-            newsanalysis.append({'blob':blob, 'text':h.get_text(), 'source':head, 'subjectivity': sub, 'sentiment': senti})
+            if senti>0.1:
+                senti_analysis = 'Positive'
+            elif senti<0.1:
+                senti_analysis = 'Negative'
+            else:
+                senti_analysis = 'Neutral'
+            newsanalysis.append({'blob':blob, 'text':h.get_text(), 'source':head, 'subjectivity': sub, 'sentiment': senti, 'senti_analysis':senti_analysis})
         return newsanalysis

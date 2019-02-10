@@ -36,8 +36,14 @@ def getSentiments(request):
     for tweet in tweepy.Cursor(api.search, q=query, result_type="recent", tweet_mode="extended", lang="en").items(20):
         blob = TextBlob(tweet.full_text)
         senti = blob.sentiment.polarity
-        sub = blob.sentiment.subjectivity
-        public_tweets.append({'tweet':tweet, 'subjectivity':sub, 'senti': senti})
+        sub = float("{0:.2f}".format(blob.sentiment.subjectivity))
+        if senti>0.1:
+            senti_analysis = 'Positive'
+        elif senti<0.1:
+            senti_analysis = 'Negative'
+        else:
+            senti_analysis = 'Neutral'
+        public_tweets.append({'tweet':tweet, 'subjectivity':sub, 'senti': senti, 'senti_analysis':senti_analysis})
         chartData[tweet.user.screen_name] = senti
 
     dataSource = OrderedDict()
@@ -69,6 +75,6 @@ def getSentiments(request):
 
     # Create an object for the column 2D chart using the FusionCharts class constructor
     # The chart data is passed to the `dataSource` parameter.
-    column2D = FusionCharts("column2d", "ex1" , "600", "400", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column2d", "ex1" , "300", "200", "chart-1", "json", dataSource)
 
     return render(request, 'search_result.html', {'public_tweets': public_tweets, 'full_analysis': full_analysis, 'output': column2D.render()})
