@@ -6,9 +6,9 @@ import json
 import tweepy
 from tweepy.auth import OAuthHandler
 from textblob import TextBlob
-from langdetect import detect
 from .fusioncharts import FusionCharts
 from collections import OrderedDict
+from .news import Analysis
 
 # Create your views here.
 
@@ -18,24 +18,28 @@ def home(request):
     return HttpResponse("welcome to home")
 
 
-def home_timeline(request):
+def tweetSentiments(request, *args, **kwargs):
     auth = OAuthHandler('XRCnQ49KVWgy0IsN5QYBTn5Zm', 'P6UwYNbfboKQfrr51P3HLjp88Mq32SxNcQt7zsFKDdAZdXrAoW')
     auth.set_access_token('912853951984238592-BODZqgKvgD0QdKD5Rz1grMGPCDFiZm4', 'proz3qXFAR7Ie8YOylG86z0uERL8orw0HcClAA2X4CN6t')
 
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
     public_tweets = []
-    query = 'DNA'
+    query = kwargs['query']
 
     for tweet in tweepy.Cursor(api.search, q=query, result_type="recent", tweet_mode="extended", lang="en").items(20):
         blob = TextBlob(tweet.full_text)
         senti = blob.sentiment.polarity
         sub = blob.sentiment.subjectivity
-        lang = detect(tweet.full_text)
-        public_tweets.append({'tweet':tweet, 'subjectivity':sub, 'language':lang})
+        public_tweets.append({'tweet':tweet, 'subjectivity':sub})
 
 
     return render(request, 'public_tweets.html', {'public_tweets': public_tweets})
+
+def newsSentiments(request, *args, **kwargs):
+    a = Analysis(kwargs['query'])
+    full_analysis = a.run()
+    return render(request, 'news.html', {'full_analysis': full_analysis})
 
 def chart(request):
 

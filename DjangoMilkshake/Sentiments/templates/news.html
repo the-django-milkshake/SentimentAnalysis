@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>News</title>
+    </head>
+    <body>
+        <ul>
+            {% for analysis in full_analysis %}
+                <li><b>{{analysis.source}}</b> - {{analysis.text}}<br>{{analysis.sentiment}}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

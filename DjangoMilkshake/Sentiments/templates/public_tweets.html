@@ -1,11 +1,11 @@
 <html>
     <head>
-        <title>Timeline</title>
+        <title>Tweets</title>
     </head>
     <body>
         <ul>
             {% for tweet in public_tweets %}
-                <li><b>@{{tweet.tweet.user.screen_name}}</b> - {{tweet.tweet.full_text}}<br>{{tweet.subjectivity}} ({{tweet.language}})</li>
+                <li><b>@{{tweet.tweet.user.screen_name}}</b> - {{tweet.tweet.full_text}}<br>{{tweet.subjectivity}} ({{tweet.tweet.lang}})</li>
             {% endfor %}
         </ul>
     </body>

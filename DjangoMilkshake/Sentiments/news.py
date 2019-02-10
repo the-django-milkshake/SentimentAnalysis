@@ -16,7 +16,9 @@ class Analysis():
         soup = BeautifulSoup(response.text, 'html.parser')
         headline_results = soup.find_all('div', class_='st')
         headline_papers = soup.find_all('div', class_='slp')
-        
+
+        newsanalysis = []
+
         for h,p in zip(headline_results, headline_papers):
             blob = TextBlob(h.get_text())
             lang = detect(h.get_text())
@@ -25,12 +27,7 @@ class Analysis():
             head = p.get_text()
             senti = blob.sentiment.polarity
             sub = blob.sentiment.subjectivity
-            print(blob, 'from', head, '   Subjectivity:', sub, '   Sentiment:', senti)
             self.sentiment += senti / len(headline_results)
             self.subjectivity += sub / len(headline_results)
-
-            
-v = input('Enter the sentiment you need: ')
-a = Analysis(v)
-a.run()
-print(a.term, '   Avg. Subjectivity:', a.subjectivity, '   Avg. Sentiment:', a.sentiment)
+            newsanalysis.append({'blob':blob, 'text':h.get_text(), 'source':head, 'subjectivity': sub, 'sentiment': senti})
+        return newsanalysis
