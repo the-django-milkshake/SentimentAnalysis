@@ -31,42 +31,27 @@ def getSentiments(request):
     else:
         return redirect('home')
 
+    chartData = OrderedDict()
+
     for tweet in tweepy.Cursor(api.search, q=query, result_type="recent", tweet_mode="extended", lang="en").items(20):
         blob = TextBlob(tweet.full_text)
         senti = blob.sentiment.polarity
         sub = blob.sentiment.subjectivity
-        public_tweets.append({'tweet':tweet, 'subjectivity':sub})
+        public_tweets.append({'tweet':tweet, 'subjectivity':sub, 'senti': senti})
+        chartData[tweet.user.screen_name] = senti
 
-
-    return render(request, 'search_result.html', {'public_tweets': public_tweets, 'full_analysis': full_analysis})
-
-
-def chart(request):
-
-    # Chart data is passed to the `dataSource` parameter, as dictionary in the form of key-value pairs.
     dataSource = OrderedDict()
 
     # The `chartConfig` dict contains key-value pairs data for chart attribute
     chartConfig = OrderedDict()
-    chartConfig["caption"] = "Countries With Most Oil Reserves [2017-18]"
-    chartConfig["subCaption"] = "In MMbbl = One Million barrels"
-    chartConfig["xAxisName"] = "Country"
-    chartConfig["yAxisName"] = "Reserves (MMbbl)"
-    chartConfig["numberSuffix"] = "K"
+    chartConfig["caption"] = "Sentiments of News"
+    chartConfig["subCaption"] = "sentiments in range -1 to 1"
+    chartConfig["xAxisName"] = "News"
+    chartConfig["yAxisName"] = "Sentiments"
+    chartConfig["numberSuffix"] = ""
     chartConfig["theme"] = "fusion"
 
     # The `chartData` dict contains key-value pairs data
-    chartData = OrderedDict()
-    chartData["Venezuela"] = 200
-    chartData["Saudi"] = 260
-    chartData["Canada"] = 180
-    chartData["Iran"] = 140
-    chartData["Russia"] = 115
-    chartData["UAE"] = 100
-    chartData["US"] = 30
-    chartData["China"] = 30
-
-
     dataSource["chart"] = chartConfig
     dataSource["data"] = []
 
@@ -86,4 +71,4 @@ def chart(request):
     # The chart data is passed to the `dataSource` parameter.
     column2D = FusionCharts("column2d", "ex1" , "600", "400", "chart-1", "json", dataSource)
 
-    return  render(request, 'chart.html', {'output' : column2D.render(), 'chartTitle': 'Simple Chart Using Array'})
+    return render(request, 'search_result.html', {'public_tweets': public_tweets, 'full_analysis': full_analysis, 'output': column2D.render()})

@@ -1,12 +1,14 @@
 <html>
     <head>
         <title>Tweets</title>
+        <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+        <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
     </head>
     <body>
         Twitter
         <ul>
             {% for tweet in public_tweets %}
-                <li><b>@{{tweet.tweet.user.screen_name}}</b> - {{tweet.tweet.full_text}}<br>{{tweet.subjectivity}} ({{tweet.tweet.lang}})</li>
+                <li><b>@{{tweet.tweet.user.screen_name}}</b> - {{tweet.tweet.full_text}}<br>Sub:{{tweet.subjectivity}} Senti:{{tweet.senti}} ({{tweet.tweet.lang}})</li>
             {% endfor %}
         </ul>
         News
@@ -15,5 +17,7 @@
                 <li><b>{{analysis.source}}</b> - {{analysis.text}}<br>{{analysis.sentiment}}</li>
             {% endfor %}
         </ul>
+        Chart
+        <div id="chart-1">{{ output|safe }}</div>
     </body>
 </html>
