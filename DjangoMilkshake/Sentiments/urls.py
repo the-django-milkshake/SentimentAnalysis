@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('tweet-sentiments/<query>', views.tweetSentiments, name="tweet-sentiments"),
+    path('get-sentiments', views.getSentiments, name="get-sentiments"),
     path('chart', views.chart, name="chart"),
-    path('news/<query>', views.newsSentiments, name="news"),
+    # path('news', views.newsSentiments, name="news"),
 ]
