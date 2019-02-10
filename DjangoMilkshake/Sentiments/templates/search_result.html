@@ -22,129 +22,26 @@
 {% block content %}
 <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
             <div class="card card-chart">
                 <div class="card-header card-header-danger">
-                <div class="ct-chart" id="dailySalesChart" style="text-align: center">
-                    <div id="chart-1">{{ output|safe }}</div>
+                <div class="ct-chart" style="text-align: center">
+                    <div id="chart-1">{{ output1|safe }}</div>
                 </div>
                 </div>
                 <div class="card-body">
-                <h4 class="card-title">Daily Tweets</h4>
-                <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today tweets.</p>
+                <h4 class="card-title">Tweet Analysis</h4>
                 </div>
                 <div class="card-footer">
                 <div class="stats">
-                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                    <i class="material-icons">access_time</i> freshly updated
                 </div>
                 </div>
             </div>
             </div>
-            <!-- <div class="col-xl-4 col-lg-12">
-            <div class="card card-chart">
-                <div class="card-header card-header-warning">
-                <div class="ct-chart" id="websiteViewsChart"></div>
-                </div>
-                <div class="card-body">
-                <h4 class="card-title">News</h4>
-                <p class="card-category">Usage</p>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
-                </div>
-            </div>
-            </div> -->
-            <!-- <div class="col-xl-4 col-lg-12">
-            <div class="card card-chart">
-                <div class="card-header card-header-danger">
-                <div class="ct-chart" id="completedTasksChart"></div>
-                </div>
-                <div class="card-body">
-                <h4 class="card-title">Completed Tasks</h4>
-                <p class="card-category">Last Campaign Performance</p>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                </div>
-                </div>
-            </div>
-            </div> -->
-        <!-- <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
-                </div>
-                <p class="card-category">Used Space</p>
-                <h3 class="card-title">49/50
-                    <small>GB</small>
-                </h3>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons text-warning">warning</i>
-                    <a href="#pablo" class="warning-link">Get More Space...</a>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">store</i>
-                </div>
-                <p class="card-category">Revenue</p>
-                <h3 class="card-title">$34,245</h3>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                </div>
-                <p class="card-category">Fixed Issues</p>
-                <h3 class="card-title">75</h3>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                </div>
-                </div>
-            </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                </div>
-                <p class="card-category">Tweets</p>
-                <h3 class="card-title">+11,22,245</h3>
-                </div>
-                <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 4 Hours
-                </div>
-                </div>
-            </div>
-            </div>
-        </div> -->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-4">
             <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" id="trending">
                 <h4 class="card-title">Trending Hashtags</h4>
 
                 <i class="material-icons">update</i> Just Updated
@@ -187,9 +84,26 @@
                 </div>
             </div>
             </div>
+            <div class="col-lg-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-danger">
+                    <div class="ct-chart" style="text-align: center">
+                        <div id="chart-2">{{ output2|safe }}</div>
+                    </div>
+                    </div>
+                    <div class="card-body">
+                    <h4 class="card-title">Tweet Analysis</h4>
+                    </div>
+                    <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i> freshly updated
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
             <div class="row">
-            <div class="col-12">
+            <div class="col-12" id="twitter">
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-warning">
                         Tweets
@@ -220,28 +134,10 @@
                         </table>
                     </div>
                     </div>
-                <!-- <table class="table" style="border: None">
-                        <tbody>
-                            <tr class="card-header card-header-tabs card-header-warning">
-                                <th>Source, Time</th>
-                                <th>Title</th>
-                                <th>Sentiment</th>
-                            </tr>
-                            <div class="card-body">
-                                {% for analysis in full_analysis %}
-                                <tr>
-                                    <td><b>{{analysis.source}}</b></td>
-                                    <td>{{analysis.text}}</td>
-                                    <td>{{analysis.sentiment}}</td>
-                                </tr>
-                                {% endfor %}
-                            </div>
-                        </tbody>
-                    </table> -->
                 </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12" id="news">
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-success">
                         News
@@ -268,18 +164,6 @@
                         </table>
                     </div>
                     </div>
-                <!-- <table class="table" style="border: None">
-                        <tbody>
-                            <tr class="card-header card-header-tabs card-header-warning">
-                                <th>Source, Time</th>
-                                <th>Title</th>
-                                <th>Sentiment</th>
-                            </tr>
-                            <div class="card-body">
-
-                            </div>
-                        </tbody>
-                    </table> -->
                 </div>
                 </div>
 </div>

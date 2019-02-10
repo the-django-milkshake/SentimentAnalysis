@@ -32,6 +32,9 @@ def getSentiments(request):
         return redirect('home')
 
     chartData = OrderedDict()
+    total_pos = 0
+    total_neg = 0
+    total_neu = 0
 
     for tweet in tweepy.Cursor(api.search, q=query, result_type="recent", tweet_mode="extended", lang="en").items(20):
         blob = TextBlob(tweet.full_text)
@@ -39,10 +42,13 @@ def getSentiments(request):
         sub = float("{0:.2f}".format(blob.sentiment.subjectivity))
         if senti>0.1:
             senti_analysis = 'Positive'
+            total_pos += 1
         elif senti<0.1:
             senti_analysis = 'Negative'
+            total_neg += 1
         else:
             senti_analysis = 'Neutral'
+            total_neu += 1
         public_tweets.append({'tweet':tweet, 'subjectivity':sub, 'senti': senti, 'senti_analysis':senti_analysis})
         chartData[tweet.user.screen_name] = senti
 
@@ -72,9 +78,41 @@ def getSentiments(request):
         data["value"] = value
         dataSource["data"].append(data)
 
-
+    datapie = [{
+            "label": "Positive",
+            "value": total_pos
+        }, {
+            "label": "Negative",
+            "value": total_neg
+        }, {
+            "label": "Neutral",
+            "value": total_neu
+        }]
     # Create an object for the column 2D chart using the FusionCharts class constructor
     # The chart data is passed to the `dataSource` parameter.
-    column2D = FusionCharts("column2d", "ex1" , "300", "200", "chart-1", "json", dataSource)
+    column2D = FusionCharts("column2d", "ex1" , "100%", "200", "chart-1", "json", dataSource)
+        # Create an object for the pie3d chart using the FusionCharts class constructor
+    pie3d = FusionCharts("pie3d", "ex2" , "100%", "200", "chart-2", "json",
+        # The data is passed as a string in the `dataSource` as parameter.
+    {
+        "chart": {
+            "caption": "Sentiment Distribution",
+            "subCaption" : "Pie Chart",
+            "showValues":"1",
+            "showPercentInTooltip" : "1",
+            "numberPrefix" : "$",
+            "enableMultiSlicing":"1",
+            "theme": "fusion"
+        },
+        "data": datapie,
+    })
 
-    return render(request, 'search_result.html', {'public_tweets': public_tweets, 'full_analysis': full_analysis, 'output': column2D.render()})
+    # returning complete JavaScript and HTML code, which is used to generate chart in the browsers.
+#   return  render(request, 'index.html', {'output' : pie3d.render(), 'chartTitle': 'Pie 3D Chart'})
+
+
+
+
+
+
+    return render(request, 'search_result.html', {'public_tweets': public_tweets, 'full_analysis': full_analysis, 'output1': column2D.render(), 'output2' : pie3d.render()})
