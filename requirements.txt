@@ -7,7 +7,7 @@ flake8==3.7.5
 idna==2.8
 langdetect==1.0.7
 mccabe==0.6.1
-nltk==3.4
+nltk==3.6.3
 oauthlib==3.0.1
 pycodestyle==2.5.0
 pyflakes==2.1.0
